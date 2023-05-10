@@ -1,4 +1,5 @@
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -28,12 +29,18 @@
         <main>
             <div class="row">
                 <div class="col-lg-6 login-container">
-                    <form action="login-send" method="post">
+                    <form action="#" th:action="@{/authenticateUser}" method="post">
+                        <div th:if="${param.error}">
+                            <i>Wrong email/password!</i>
+                        </div>
+                        <div th:if="${param.logout}">
+                            <i>You have been logged out!</i>
+                        </div>
                         <div class="input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-user input-icons"></i></span>
                             </div>
-                            <input name="email" type="email" class="form-control input-text" placeholder="Email">
+                            <input name="username" type="email" class="form-control input-text" placeholder="Email">
                         </div>
                         <div class="input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
@@ -41,7 +48,7 @@
                             </div>
                             <input name="password" type="password" class="form-control input-text" placeholder="Password">
                         </div>
-                        <button name="submit" onclick="location.href='/login'" class="btn btn-outline-light btn-lg log-buttons" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
+                        <button name="submit" onclick="location.href='/workout'" class="btn btn-outline-light btn-lg log-buttons" type="submit"><i class="fa-solid fa-right-to-bracket"></i> Login</button>
                     </form>
                 </div>
                 <div class="col-lg-6 man-img-container">
