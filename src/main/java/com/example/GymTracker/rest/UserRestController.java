@@ -8,23 +8,33 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/users")
+@RequestMapping("/api")
 public class UserRestController {
-    private final UserService userService;
+    private UserService userService;
 
     @Autowired
     public UserRestController(UserService userService) {
         this.userService = userService;
     }
 
-    @GetMapping("/")
+    @GetMapping("/users")
     public List<User> getUsers(){
         return userService.getUsers();
     }
+    @GetMapping("/users/{id}")
+    public User getUser(@RequestParam int id){
+        return userService.getUser(id);
+    }
 
-    @PostMapping("/")
+    @PostMapping("/users")
     public User addUser(@RequestBody User user){
+        user.setId(0);
         return userService.addUser(user);
+    }
+
+    @PutMapping("/users")
+    public User updateUser(@RequestBody User user){
+        return userService.updateUser(user);
     }
 
 }

@@ -8,8 +8,8 @@
     
     <!-- styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/register.css">
+    <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+    <link rel="stylesheet" href="../static/css/register.css" th:href="@{/css/register.css}">
     
     <!-- fonts -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat&family=Ubuntu&display=swap" rel="stylesheet">
@@ -29,19 +29,22 @@
         <main>
             <div class="row">
                 <div class="col-lg-6 register-container">
-                    <form action="users" method="post">
+                    <form action="#" th:action="@{/users/add}" th:object="${webUser}" method="post">
+                        <p th:text="${registrationError}"></p>
+                        <div th:if="${#fields.hasErrors('email')}" th:errors="*{email}">email error></div>
                         <div class="input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-user input-icons"></i></span>
                             </div>
-                            <input name="email" type="email" class="form-control input-text" placeholder="Email">
+                            <input name="email" type="email" th:field="*{email}" class="form-control input-text" placeholder="Email">
                         </div>
-                        
+
+                        <div th:if="${#fields.hasErrors('password')}" th:errors="*{password}">password error></div>
                         <div class="input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-lock input-icons"></i></span>
                             </div>
-                            <input name="password" type="password" class="form-control input-text" placeholder="Password">
+                            <input name="password" type="password" th:field="*{password}" class="form-control input-text" placeholder="Password">
                         </div>
 
                         <div class="input-group input-group-lg mb-3">
@@ -51,27 +54,30 @@
                             <input name="confirmedPassword" type="password" class="form-control input-text" placeholder="Confirm Password">
                         </div>
 
+                        <div th:if="${#fields.hasErrors('name')}" th:errors="*{name}">name error></div>
                         <div class="input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-signature input-icons"></i></span>
                             </div>
-                            <input name="name" type="text" class="form-control input-text" placeholder="Name">
+                            <input name="name" type="text" th:field="*{name}" class="form-control input-text" placeholder="Name">
                         </div>
 
+                        <div th:if="${#fields.hasErrors('surname')}" th:errors="*{surname}">surname error></div>
                         <div class="input-group input-group-lg mb-3">
                             <div class="input-group-prepend">
                             <span class="input-group-text"><i class="fa-solid fa-signature input-icons"></i></span>
                             </div>
-                            <input name="surname" type="text" class="form-control input-text" placeholder="Surname">
+                            <input name="surname" type="text" th:field="*{surname}" class="form-control input-text" placeholder="Surname">
                         </div>
                         
-                        <button onclick="location.href='/register'" class="btn btn-dark btn-lg log-buttons" type="submit"><i class="fa-regular fa-address-card"></i> Register</button>
+                        <button class="btn btn-dark btn-lg log-buttons" type="submit"><i class="fa-regular fa-address-card"></i> Register</button>
                     </form>
                 </div>
                 <div class="col-lg-6 man-img-container">
                     <img class="man-img" src="images/man.svg" alt="man">
                 </div>
             <div class="container"></div>
+            </div>
         </main>
     </div>
 </body>

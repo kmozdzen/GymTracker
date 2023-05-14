@@ -33,9 +33,6 @@ public class DefaultController {
         return "exercises";
     }
 
-    @GetMapping("/profile")
-    public String profile(){
-        return "profile";
-    }
+
 
 }
