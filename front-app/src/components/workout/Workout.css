@@ -1,0 +1,19 @@
+.workout-container
+{
+    background-color: #00B6B7;
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+.list-group-item
+{
+    border: none !important; 
+    margin: 30px;
+}
+
+.workout-title
+{
+    font-size: 4rem;
+    background: none;
+}

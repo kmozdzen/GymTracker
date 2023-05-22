@@ -28,6 +28,9 @@ public class Exercise {
     @Column(name = "equipment")
     private String equipment;
 
+    @Column(name = "difficulty")
+    private String difficulty;
+
     @Column(name = "instructions")
     private String instructions;
 

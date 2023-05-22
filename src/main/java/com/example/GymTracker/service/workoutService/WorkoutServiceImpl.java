@@ -9,7 +9,7 @@ import java.util.List;
 
 @Service
 public class WorkoutServiceImpl implements WorkoutService{
-    private final WorkoutRepository workoutRepository;
+    private WorkoutRepository workoutRepository;
 
     @Autowired
     public WorkoutServiceImpl(WorkoutRepository workoutRepository) {

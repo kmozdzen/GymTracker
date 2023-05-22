@@ -34,11 +34,14 @@ public class User {
     @Column(name = "surname")
     private String surname;
 
-    @ManyToOne
-    @JoinColumn(name = "role_id_role")
-    @JsonManagedReference
-    private Role role;
+    @Column(name = "active")
+    private int Enabled;
+
 
     @OneToMany(mappedBy = "user")
     private List<Workout> workouts;
+
+    @JsonManagedReference
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
+    private List<Role> roles;
 }

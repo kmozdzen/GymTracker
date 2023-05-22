@@ -12,7 +12,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/workouts/")
 public class WorkoutRestController {
-    private final WorkoutService workoutService;
+    private WorkoutService workoutService;
 
     @Autowired
     public WorkoutRestController(WorkoutService workoutService) {

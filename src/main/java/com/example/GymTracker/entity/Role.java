@@ -2,6 +2,7 @@ package com.example.GymTracker.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,7 +23,14 @@ public class Role {
 
     @Column(name = "name")
     private String name;
+
+    @ManyToMany
+    @JoinTable(
+            name = "role_has_user",
+            joinColumns = @JoinColumn(name = "role_id_role"),
+            inverseJoinColumns = @JoinColumn(name = "user_id")
+
+    )
     @JsonBackReference
-    @OneToMany(mappedBy = "role")
     private List<User> users;
 }
