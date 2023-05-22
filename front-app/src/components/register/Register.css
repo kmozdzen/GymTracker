@@ -1,0 +1,49 @@
+.register-container
+{
+    background-color: #00B6B7;
+    border-radius: 20px;
+
+    text-align: center;
+}
+
+form
+{
+    margin: 50px 100px;
+    background-color: #00B6B7;
+}
+
+
+.fa-user, .fa-lock, .fa-signature
+{
+    color: #00B6B7;
+    margin: auto;
+    font-size: 2rem;
+}
+
+.input-group
+{
+    border-radius: 20px;
+}
+
+
+.form-control::placeholder
+{
+    color: white;
+    opacity: 60%;
+}
+
+.log-buttons
+{
+    margin: auto;
+    margin-top: 15px;
+}
+
+#signature-addon, #lock-addon, #user-addon 
+{
+    background-color: #050D54;
+}
+
+svg
+{
+    background: none;
+}
