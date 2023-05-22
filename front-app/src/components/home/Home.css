@@ -15,7 +15,7 @@ h1
     font-weight: 500;
 }
 
-h2
+.h2-text
 {
     font-family: 'Montserrat-Black', sans-serif;
     font-size: 7rem;
@@ -32,7 +32,14 @@ h2
     width: 70%;
 }
 
-.log-buttons
+.man-img-container
 {
-    margin-left: 20px;
+    text-align: center
+}
+
+hr
+{
+    color: white;
+    background-color: white;
+    height: 5px;
 }

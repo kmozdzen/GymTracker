@@ -12,7 +12,7 @@ import { InputGroup } from 'react-bootstrap';
 import { Button } from "react-bootstrap";
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faUser } from '@fortawesome/free-solid-svg-icons';
+import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faSignature } from '@fortawesome/free-solid-svg-icons';
 import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
@@ -25,7 +25,7 @@ const Register = () => {
                 <Col lg="6" className='register-container'>
                     <Form>
                         <InputGroup className="mb-4">
-                            <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUser}/></InputGroup.Text>
+                            <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
                             <Form.Control
                                 type="email"
                                 placeholder="Email"
