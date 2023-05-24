@@ -30,17 +30,14 @@ public class Workout {
     @Column(name = "date")
     private Date date;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id")
     @JsonIgnore
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "user_id")
     private User user;
 
-    @ManyToMany
-    @JoinTable(
-            name = "workout_has_exercise",
-            joinColumns = @JoinColumn(name = "workout_id_workout"),
-            inverseJoinColumns = @JoinColumn(name = "exercise_id_exercise")
-    )
     @JsonManagedReference
-    private List<Exercise> exercises;
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "exercise_id")
+    private Exercise exercise;
+
 }

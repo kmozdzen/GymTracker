@@ -15,8 +15,6 @@ import java.util.List;
 public class ExerciseServiceImpl implements ExerciseService {
     private ExerciseRepository exerciseRepository;
 
-    @Value("${api.key}")
-    private String apiKey;
     @Autowired
     public ExerciseServiceImpl(ExerciseRepository exerciseRepository) {
         this.exerciseRepository = exerciseRepository;
@@ -34,6 +32,11 @@ public class ExerciseServiceImpl implements ExerciseService {
 
     @Override
     public List<Exercise> getExercisesByMuscle(String muscle) {
+        return exerciseRepository.findExercisesByMuscle(muscle);
+    }
+
+    @Override
+    public List<Exercise> getExercise(String muscle) {
         return exerciseRepository.findExercisesByMuscle(muscle);
     }
 

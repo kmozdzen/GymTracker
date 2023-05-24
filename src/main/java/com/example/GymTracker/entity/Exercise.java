@@ -34,7 +34,7 @@ public class Exercise {
     @Column(name = "instructions")
     private String instructions;
 
-    @ManyToMany(mappedBy = "exercises")
     @JsonBackReference
+    @OneToMany(mappedBy = "exercise")
     private List<Workout> workouts;
 }

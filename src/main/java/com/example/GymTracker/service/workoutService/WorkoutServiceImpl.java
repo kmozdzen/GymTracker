@@ -5,6 +5,7 @@ import com.example.GymTracker.entity.Workout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.sql.Date;
 import java.util.List;
 
 @Service
@@ -19,5 +20,10 @@ public class WorkoutServiceImpl implements WorkoutService{
     @Override
     public List<Workout> getWorkouts() {
         return workoutRepository.findAll();
+    }
+
+    @Override
+    public List<Workout> getWorkoutsByDate(Date date) {
+        return workoutRepository.getWorkoutsByDate(date);
     }
 }

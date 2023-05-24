@@ -11,17 +11,17 @@ const App = () => {
     console.log("response.data");
     const [user, setUser] = useState();
 
-     useEffect(() => {
-        fetch('http://localhost:8080/api/users/5')
-           .then((response) => response.json())
-           .then((data) => {
-               console.log(data);
-              setUser(data);
-           })
-           .catch((err) => {
-               console.log(err.message);
-           });
-     }, []);
+    //  useEffect(() => {
+    //     fetch('http://localhost:8080/api/users/1')
+    //        .then((response) => response.json())
+    //        .then((data) => {
+    //            console.log(data);
+    //           setUser(data);
+    //        })
+    //        .catch((err) => {
+    //            console.log(err.message);
+    //        });
+    //  }, []);
 
     return (
         <div>

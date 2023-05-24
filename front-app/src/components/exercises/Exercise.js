@@ -10,6 +10,7 @@ import { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
 import Button from "react-bootstrap/Button";
 import data from "./ExercisesContent";
+import axios from "axios";
 
 const Exercise = () => {
 
@@ -18,7 +19,8 @@ const Exercise = () => {
     const [exercises, setExercises] = useState();
     
     useEffect(() => {
-    fetch('http://localhost:8080/api/exercises/' + name)
+    axios.get('http://localhost:8080/api/exercises/' + name
+    )
            .then((response) => response.json())
            .then((data) => {
                console.log(data);

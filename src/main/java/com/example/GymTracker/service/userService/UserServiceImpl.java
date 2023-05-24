@@ -1,22 +1,20 @@
 package com.example.GymTracker.service.userService;
 
 import com.example.GymTracker.dao.UserRepository;
+
 import com.example.GymTracker.entity.User;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.CharBuffer;
 import java.util.List;
 
 @Service
+@RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
-
-    @Autowired
-    public UserServiceImpl(UserRepository userRepository) {
-        this.userRepository = userRepository;
-    }
-
     @Override
     public List<User> getUsers() {
         return userRepository.findAll();
@@ -45,4 +43,5 @@ public class UserServiceImpl implements UserService {
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
     }
+
 }

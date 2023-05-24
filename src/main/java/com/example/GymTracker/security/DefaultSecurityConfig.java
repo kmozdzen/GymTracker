@@ -1,64 +1,69 @@
 package com.example.GymTracker.security;
 
-import com.example.GymTracker.service.userDetailsService.UserDetailsServiceImpl;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+import org.springframework.security.web.authentication.logout.LogoutHandler;
 
 @Configuration
+@EnableWebSecurity
+@EnableMethodSecurity
 public class DefaultSecurityConfig {
+    private final JwtAuthenticationFilter jwtAuthFilter;
+    private final AuthenticationProvider authenticationProvider;
+    private final LogoutHandler logoutHandler;
+
+    @Autowired
+    public DefaultSecurityConfig(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider, LogoutHandler logoutHandler) {
+        this.jwtAuthFilter = jwtAuthFilter;
+        this.authenticationProvider = authenticationProvider;
+        this.logoutHandler = logoutHandler;
+    }
+
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception{
-        http.authorizeHttpRequests(configurer ->
-                configurer
-                        .requestMatchers("/api/users/**").hasRole("USER")
-                        .requestMatchers("/api/workouts/**").hasRole("ADMIN")
-                        .requestMatchers("/css/**").permitAll()
-                        .requestMatchers("/images/**").permitAll()
-                        .requestMatchers("/").permitAll()
-                        .requestMatchers("/login").permitAll()
-                        .requestMatchers("/register").permitAll()
-                        .anyRequest().authenticated()
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf()
+                .and()
+                .cors()
+                .disable()
+                .authorizeHttpRequests()
+                .requestMatchers(
+                        "/api/v1/auth/**",
+                        "/v2/api-docs",
+                        "/v3/api-docs",
+                        "/v3/api-docs/**",
+                        "/swagger-resources",
+                        "/swagger-resources/**",
+                        "/configuration/ui",
+                        "/configuration/security",
+                        "/swagger-ui/**",
+                        "/webjars/**",
+                        "/swagger-ui.html"
                 )
-                .formLogin(form ->
-                        form
-                                .loginPage("/login")
-                                .loginProcessingUrl("/authenticateUser")
-                                .permitAll()
-                )
-                .logout(logout ->
-                        logout
-                                .permitAll()
-                )
-                .exceptionHandling(configurer ->
-                        configurer
-                                .accessDeniedPage("/access-denied")
-                );
+                .permitAll()
+                .anyRequest()
+                .authenticated()
+                .and()
+                .sessionManagement()
+                .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and()
+                .authenticationProvider(authenticationProvider)
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
+                .logout()
+                .logoutUrl("/api/v1/auth/logout")
+                .addLogoutHandler(logoutHandler)
+                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
+        ;
+
         return http.build();
     }
-
-    @Bean
-    public UserDetailsService myUserDetailsService(){
-        return new UserDetailsServiceImpl();
-    }
-    @Bean
-    public AuthenticationProvider authenticationProvider() {
-        DaoAuthenticationProvider authenticationProvider = new DaoAuthenticationProvider();
-        authenticationProvider.setUserDetailsService(myUserDetailsService());
-        authenticationProvider.setPasswordEncoder(encoder());
-        return authenticationProvider;
-    }
-
-    @Bean
-    public PasswordEncoder encoder() {
-        return new BCryptPasswordEncoder();
-    }
-
 }
