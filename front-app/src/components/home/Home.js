@@ -28,7 +28,7 @@ const Home = () => {
             <HomeHeader/>
             <Row >
                 <Col lg="6">
-                    <h2>Watch your progress!</h2>
+                    <h2 className='h2-text'>Watch your progress!</h2>
                     <div className="buttons">
                         <Button onClick={routeChangeToRegister} className="log-buttons" variant="dark" size="lg" type="button"><FontAwesomeIcon icon={faAddressCard}/> Register</Button>
                         <Button onClick={routeChangeToLogin} className="log-buttons" variant="outline-light" size="lg" type="button"><FontAwesomeIcon icon={faRightToBracket}/> Login</Button>

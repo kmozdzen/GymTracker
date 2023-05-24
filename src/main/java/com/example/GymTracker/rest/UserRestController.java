@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
 @RequestMapping("/api")
 public class UserRestController {
     private UserService userService;
@@ -22,7 +23,7 @@ public class UserRestController {
         return userService.getUsers();
     }
     @GetMapping("/users/{id}")
-    public User getUser(@RequestParam int id){
+    public User getUser(@PathVariable("id") int id){
         return userService.getUser(id);
     }
 

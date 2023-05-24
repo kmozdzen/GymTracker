@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.logging.Logger;
 
 @Controller
+@CrossOrigin(origins = "http://localhost:3000")
 public class UserController {
     private UserService userService;
     private PasswordEncoder passwordEncoder;

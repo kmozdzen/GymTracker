@@ -9,32 +9,19 @@ import Profile from './components/profile/Profile';
 import Workout from './components/workout/Workout';
 const App = () => {
     console.log("response.data");
-    const [exercises, setExercises] = useState();
     const [user, setUser] = useState();
 
-    useEffect(() => {
-        fetch('http://localhost:8080/api/exercises/')
-           .then((response) => response.json())
-           .then((data) => {
-               console.log(data);
-              setExercises(data);
-           })
-           .catch((err) => {
-               console.log(err.message);
-           });
-     }, []);
-
-     useEffect(() => {
-        fetch('http://localhost:8080/api/users/5')
-           .then((response) => response.json())
-           .then((data) => {
-               console.log(data);
-              setUser(data);
-           })
-           .catch((err) => {
-               console.log(err.message);
-           });
-     }, []);
+    //  useEffect(() => {
+    //     fetch('http://localhost:8080/api/users/1')
+    //        .then((response) => response.json())
+    //        .then((data) => {
+    //            console.log(data);
+    //           setUser(data);
+    //        })
+    //        .catch((err) => {
+    //            console.log(err.message);
+    //        });
+    //  }, []);
 
     return (
         <div>
@@ -44,8 +31,8 @@ const App = () => {
                     <Route path='/register' element={<Register/>}></Route>
                     <Route path='/login' element={<Login/>}></Route>
                     <Route path='/profile' element={<Profile user={user}/>}></Route>
-                    <Route path='/workout' element={<Workout/>}></Route>
-                    {/* <Route path='/exercises' element={<Exercise />}></Route> */}
+                    <Route path='/workouts' element={<Workout/>}></Route>
+                    <Route path='/workouts/' element={<Workout/>}></Route>
                     <Route 
                         path='/exercises/:name' 
                         element={<Exercise />}>

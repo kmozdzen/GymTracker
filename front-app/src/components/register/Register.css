@@ -12,8 +12,14 @@ form
     background-color: #00B6B7;
 }
 
+.fa-user-large
+{
+    color: #00B6B7;
+    margin: auto;
+    font-size: 1.8rem;
+}
 
-.fa-user, .fa-lock, .fa-signature
+.fa-lock, .fa-signature
 {
     color: #00B6B7;
     margin: auto;

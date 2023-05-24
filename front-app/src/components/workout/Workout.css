@@ -2,18 +2,69 @@
 {
     background-color: #00B6B7;
     border-radius: 20px;
-
     text-align: center;
+
+    margin-bottom: 40px;
+}
+
+.list-group
+{
+    display: flex;
+    text-align: center;
+    justify-content: center;
 }
 
 .list-group-item
 {
     border: none !important; 
+    margin: auto;
     margin: 30px;
+}
+
+.bg-color
+{
+    background-color: #00B6B7;
 }
 
 .workout-title
 {
     font-size: 4rem;
     background: none;
+}
+
+.calendar-col
+{
+    background-color: #00B6B7;
+    
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calendar-container
+{
+    margin: auto;
+    background: none;
+}
+
+h3
+{
+    color: white;
+    margin: auto;
+}
+
+h3:hover
+{
+    cursor: pointer;
+}
+
+.muscle-name
+{
+    text-decoration: none;
+    color: white;
+}
+
+.text-label
+{
+    font-size: 1.5rem;
 }

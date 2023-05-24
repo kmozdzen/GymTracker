@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins= "http://localhost:3000" )
 @RequestMapping("api/exercises")
 public class ExerciseRestController {
     private ExerciseService exerciseService;
@@ -22,6 +23,11 @@ public class ExerciseRestController {
     @GetMapping("/")
     public List<Exercise> getExercises(){
         return exerciseService.getExercises();
+    }
+
+    @GetMapping("/{muscle}")
+    public List<Exercise> getExercise(@PathVariable("muscle") String muscle){
+        return exerciseService.getExercise(muscle);
     }
 
     @PostMapping("/")
