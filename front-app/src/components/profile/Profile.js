@@ -9,8 +9,28 @@ import { ListGroup } from 'react-bootstrap';
 
 import Header from '../header/Header';
 
-const Profile = ({user}) => {
-    if(user === undefined) {return}
+import { useState } from 'react';
+import { useEffect } from 'react';
+
+const Profile = () => {
+    // const [user, setUser] = useState();
+
+    //  useEffect(() => {
+    //     fetch('http://localhost:8080/api/users/email/' + localStorage.getItem("email"))
+    //        .then((response) => response.json())
+    //        .then((data) => {
+    //            console.log(data);
+    //           setUser(data);
+    //        })
+    //        .catch((err) => {
+    //            console.log(err.message);
+    //        });
+    //  }, []);
+
+    let email = localStorage.getItem("email");
+    let name = localStorage.getItem("name");
+    let surname = localStorage.getItem("surname");
+
     return (
         <Container fluid="lg">
         <Header />
@@ -22,17 +42,17 @@ const Profile = ({user}) => {
                 <ListGroup className="user-data-list" variant="flush">
                     <ListGroup.Item>
                         <h3>Email:</h3>
-                        <h4 >{user.email}</h4>
+                        <h4 >{email}</h4>
                     </ListGroup.Item>
                     <hr />
                     <ListGroup.Item>
                         <h3>Name:</h3>
-                        <h4 >{user.name}</h4>
+                        <h4 >{name}</h4>
                     </ListGroup.Item>
                     <hr />
                     <ListGroup.Item>
                         <h3>Surname:</h3>
-                        <h4 >{user.surname}</h4>
+                        <h4 >{surname}</h4>
                     </ListGroup.Item>
                     <hr />
                 </ListGroup>

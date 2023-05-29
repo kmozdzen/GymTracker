@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@CrossOrigin(origins= {"*"}, maxAge = 4800, allowCredentials = "false" )
+@CrossOrigin(origins= "*")
 @RequestMapping("/api")
 public class UserRestController {
     private UserService userService;
@@ -27,6 +27,10 @@ public class UserRestController {
         return userService.getUser(id);
     }
 
+    @GetMapping("/users/email/{email}")
+    public User getUserByEmail(@PathVariable("email") String email){
+        return userService.getUserByEmail(email);
+    }
     @PostMapping("/users")
     public User addUser(@RequestBody User user){
         user.setId(0);

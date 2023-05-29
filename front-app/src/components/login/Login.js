@@ -19,12 +19,14 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+
+
 const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    
     const navigate = useNavigate();
- 
  
     async function login(event) {
         event.preventDefault();
@@ -35,19 +37,13 @@ const Login = () => {
             }).then((res) =>
             {
              console.log(res.data);
-            
-             if (res.data.message === "Email not exits")
+             if(res.data.message === "Login success")
              {
-               alert("Email not exits");
-             }
-             else if(res.data.message === "Login success")
-             {
-                
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('email', res.data.email);
+                localStorage.setItem('name', res.data.name);
+                localStorage.setItem('surname', res.data.surname);
                 navigate('/workouts');
-             }
-              else
-             {
-                alert("Incorrect Email and Password not match");
              }
           }, fail => {
            console.error(fail); // Error!
@@ -72,6 +68,7 @@ const Login = () => {
                         onChange={(event) => {
                             setEmail(event.target.value);
                         }}
+                        
                         >
                             <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
                             <Form.Control

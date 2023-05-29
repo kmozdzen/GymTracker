@@ -104,7 +104,7 @@ const Workout = () => {
                         <div key={i} className="workout-data bg-color">
                         <ListGroup className="bg-color">
                             <ListGroup.Item >
-                                <h4 className="bg-color">{workout.exercises[0].name}</h4>
+                                <h4 className="bg-color">{workout.exercise.name}</h4>
                                 <br/>
                                 <p className="bg-color">reps: {workout.reps}</p>
                                 <p className="bg-color">weight: {workout.weight}</p>

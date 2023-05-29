@@ -7,16 +7,6 @@ hr
     width: 100%;
 }
 
-.category
-{
-    background-image: url('../../images/full-body.png');
-    width: 250px;
-    height: 250px;
-
-    position: relative;
-    margin-top: 25px;
-}
-
 h3
 {
     background-color: black;

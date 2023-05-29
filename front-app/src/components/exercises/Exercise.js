@@ -18,9 +18,9 @@ const Exercise = () => {
 
     const [exercises, setExercises] = useState();
     
-    useEffect(() => {
-    axios.get('http://localhost:8080/api/exercises/' + name
-    )
+
+    useEffect( () => {
+         fetch('http://localhost:8080/api/exercises/' + name)
            .then((response) => response.json())
            .then((data) => {
                console.log(data);
@@ -29,7 +29,7 @@ const Exercise = () => {
            .catch((err) => {
                console.log(err.message);
            });
-     }, []);
+    }, []);
  
     return (
         <Container fluid="lg">
@@ -39,8 +39,8 @@ const Exercise = () => {
                 <hr />
                 <div className="cards-container">
                 {
-                    data.map((exerciseCard) =>{
-                        return <Card style={{ width: '18rem' }}>
+                    data.map((exerciseCard, index) =>{
+                        return <Card style={{ width: '18rem' }} key={index}>
                         <Card.Img variant="top" src={exerciseCard.img} />
                         <Card.Body>
                             <Card.Title><a className="muscle-name" href={exerciseCard.muscle}>{exerciseCard.muscle.toUpperCase()}</a></Card.Title>
@@ -52,8 +52,8 @@ const Exercise = () => {
             </div>
             <div className="exercises-content">
                 <h4 className="muscle-title">{name.toUpperCase()}</h4>
-                {exercises?.map(exercise => 
-                    <div>
+                {exercises?.map((exercise, index) => 
+                    <div key={index}>
                         <p><span className="text-label">Name: </span> {exercise.name}</p>
                         <p><span className="text-label">Equipment: </span> {exercise.equipment}</p>
                         <p><span className="text-label">Difficulty: </span> {exercise.difficulty}</p>

@@ -4,6 +4,7 @@ package com.example.GymTracker.auth;
 import com.example.GymTracker.dao.UserRepository;
 import com.example.GymTracker.entity.User;
 import com.example.GymTracker.message.LoginMessage;
+import com.example.GymTracker.token.Token;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,11 +12,12 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/api/v1/auth")
-@CrossOrigin(origins = "http://localhost:3000")
+@CrossOrigin(origins = "*")
 public class AuthController {
     private final AuthService service;
     private final UserRepository userRepository;
@@ -36,8 +38,9 @@ public class AuthController {
     public LoginMessage authenticate(@RequestBody AuthRequest request) {
         User user = userRepository.findByEmail(request.getEmail());
         if(user != null){
-            if(!service.authenticate(request).getAccessToken().isEmpty())
-                return new LoginMessage("Login success", true);
+            String token;
+            if(!(token = service.authenticate(request).getAccessToken()).isEmpty())
+                return new LoginMessage("Login success", true, token, user.getEmail(), user.getName(), user.getSurname());
             else
                 return new LoginMessage("Login failed", false);
         }else
@@ -52,5 +55,32 @@ public class AuthController {
             HttpServletResponse response
     ) throws IOException {
         service.refreshToken(request, response);
+    }
+
+    @PostMapping("/logout")
+    public String logout(@RequestBody TokenRequest request) {
+        if(request.getToken() == null){
+            System.out.println("Failed");
+            return "Failed";
+        }
+        service.deleteByToken(request.getToken());
+        System.out.println("Success");
+        return "Success";
+    }
+
+    @PostMapping("/isToken/{token}")
+    public LoginMessage isToken(@PathVariable("token") String token) {
+        Optional<Token> theToken = service.getByToken(token);
+        try {
+            String t = theToken.get().token;
+        }catch (Exception exception){
+            System.out.println("nie ma tokena");
+            return new LoginMessage("not valid", false);
+        }
+        if (theToken.get().expired) {
+            System.out.println("token wygasl");
+            return new LoginMessage("not valid", false);
+        }
+        return new LoginMessage("valid", true);
     }
 }

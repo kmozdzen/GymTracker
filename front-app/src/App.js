@@ -7,35 +7,58 @@ import Register from './components/register/Register';
 import Login from './components/login/Login';
 import Profile from './components/profile/Profile';
 import Workout from './components/workout/Workout';
-const App = () => {
-    console.log("response.data");
-    const [user, setUser] = useState();
+import { ProtectedRoute } from './components/authentication/ProtectedRoute';
 
-    //  useEffect(() => {
-    //     fetch('http://localhost:8080/api/users/1')
-    //        .then((response) => response.json())
-    //        .then((data) => {
-    //            console.log(data);
-    //           setUser(data);
-    //        })
-    //        .catch((err) => {
-    //            console.log(err.message);
-    //        });
-    //  }, []);
+const App = () => {
+
 
     return (
         <div>
             <Routes>
                 <Route path='/' element={<Layout/>}>
-                    <Route path='/' element={<Home/>}></Route>
-                    <Route path='/register' element={<Register/>}></Route>
-                    <Route path='/login' element={<Login/>}></Route>
-                    <Route path='/profile' element={<Profile user={user}/>}></Route>
-                    <Route path='/workouts' element={<Workout/>}></Route>
-                    <Route path='/workouts/' element={<Workout/>}></Route>
                     <Route 
-                        path='/exercises/:name' 
-                        element={<Exercise />}>
+                        path='/' 
+                        element={<Home/>}>
+                    </Route>
+                    <Route 
+                        path='/register' 
+                        element={<Register/>}>
+                    </Route>
+                    <Route 
+                        path='/login' 
+                        element={<Login/>}>
+                    </Route>
+                    <Route 
+                        path='/profile' 
+                        element={
+                            <ProtectedRoute>
+                                <Profile />
+                            </ProtectedRoute>
+                        }>
+                    </Route>
+                    <Route 
+                        path='/workouts' 
+                        element={
+                            <ProtectedRoute>
+                                <Workout />
+                            </ProtectedRoute>
+                        }>
+                    </Route>
+                    <Route 
+                        path='/exercises/:name'
+                        element={
+                            <ProtectedRoute>
+                                <Exercise />
+                            </ProtectedRoute>
+                        }>
+                    </Route>
+                    <Route 
+                        path='/logout'
+                        element={
+                            <ProtectedRoute>
+                                <Exercise />
+                            </ProtectedRoute>
+                        }>
                     </Route>
                 </Route>
             </Routes>
