@@ -1,5 +1,9 @@
 package com.example.GymTracker.message;
 
+import com.example.GymTracker.entity.Role;
+
+import java.util.List;
+
 public class LoginMessage {
     String message;
     Boolean status;
@@ -7,6 +11,16 @@ public class LoginMessage {
     String email;
     String name;
     String surname;
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
+    List<Role> roles;
 
     public String getName() {
         return name;
@@ -61,12 +75,13 @@ public class LoginMessage {
         this.status = status;
     }
 
-    public LoginMessage(String message, Boolean status, String token, String email, String name, String surname) {
+    public LoginMessage(String message, Boolean status, String token, String email, String name, String surname, List<Role> roles) {
         this.message = message;
         this.status = status;
         this.token = token;
         this.email = email;
         this.name = name;
         this.surname = surname;
+        this.roles = roles;
     }
 }

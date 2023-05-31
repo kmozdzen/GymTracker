@@ -25,9 +25,24 @@ const Login = () => {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [noEmail, setNoEmail] = useState(false);
+    const [error, setError] = useState(false);
     
     const navigate = useNavigate();
- 
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else{
+        login(event);
+      }
+  
+      setValidated(true);
+    };
     async function login(event) {
         event.preventDefault();
         try {
@@ -45,6 +60,15 @@ const Login = () => {
                 localStorage.setItem('surname', res.data.surname);
                 navigate('/workouts');
              }
+             if(res.data.message === "Email not exits")
+             {
+                setError(false);
+                setNoEmail(true);
+             }else{
+                setNoEmail(false);
+                setError(true);
+             }
+             
           }, fail => {
            console.error(fail); // Error!
   });
@@ -61,7 +85,9 @@ const Login = () => {
             <HomeHeader/>
             <Row >
                 <Col lg="6" className='login-container'>
-                    <Form>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                        {noEmail ? <p>Email not exists</p> : null}
+                        {error ? <p>Wrong password</p> : null}
                         <InputGroup 
                         className="mb-4"
                         value={email}
@@ -72,6 +98,7 @@ const Login = () => {
                         >
                             <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
                             <Form.Control
+                                required
                                 type="email"
                                 placeholder="Email"
                                 aria-describedby="user-addon"
@@ -87,6 +114,7 @@ const Login = () => {
                         >
                         <InputGroup.Text id="lock-addon"><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
                         <Form.Control
+                            required
                             type="password"
                             placeholder="Password"
                             aria-describedby="lock-addon"
@@ -94,8 +122,7 @@ const Login = () => {
                         </InputGroup>
 
                         <Button 
-                        onClick={login}
-                        className="log-buttons" variant="outline-light" size="lg" type="button"><FontAwesomeIcon icon={faRightToBracket}/> Login</Button>
+                        className="log-buttons" variant="outline-light" size="lg" type="submit"><FontAwesomeIcon icon={faRightToBracket}/> Login</Button>
                     </Form>
                 </Col>
                 <Col lg="6" className="man-img-container">

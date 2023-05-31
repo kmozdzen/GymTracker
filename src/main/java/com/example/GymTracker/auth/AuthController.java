@@ -37,15 +37,20 @@ public class AuthController {
     @PostMapping("/authenticate")
     public LoginMessage authenticate(@RequestBody AuthRequest request) {
         User user = userRepository.findByEmail(request.getEmail());
-        if(user != null){
-            String token;
-            if(!(token = service.authenticate(request).getAccessToken()).isEmpty())
-                return new LoginMessage("Login success", true, token, user.getEmail(), user.getName(), user.getSurname());
-            else
-                return new LoginMessage("Login failed", false);
-        }else
+        try
         {
-            return new LoginMessage("Email not exits", false);
+            if(user != null){
+                String token;
+                if(!(token = service.authenticate(request).getAccessToken()).isEmpty())
+                    return new LoginMessage("Login success", true, token, user.getEmail(), user.getName(), user.getSurname(), user.getRoles());
+                else
+                    return new LoginMessage("Login failed", false);
+            }else
+            {
+                return new LoginMessage("Email not exits", false);
+            }
+        }catch (Exception ex){
+            return new LoginMessage("Wrong email/password", false);
         }
     }
 
@@ -60,11 +65,9 @@ public class AuthController {
     @PostMapping("/logout")
     public String logout(@RequestBody TokenRequest request) {
         if(request.getToken() == null){
-            System.out.println("Failed");
             return "Failed";
         }
         service.deleteByToken(request.getToken());
-        System.out.println("Success");
         return "Success";
     }
 
@@ -74,11 +77,9 @@ public class AuthController {
         try {
             String t = theToken.get().token;
         }catch (Exception exception){
-            System.out.println("nie ma tokena");
             return new LoginMessage("not valid", false);
         }
         if (theToken.get().expired) {
-            System.out.println("token wygasl");
             return new LoginMessage("not valid", false);
         }
         return new LoginMessage("valid", true);

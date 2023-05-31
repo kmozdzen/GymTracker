@@ -24,6 +24,20 @@ const Register = () => {
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [validated, setValidated] = useState(false);
+
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else{
+        save(event);
+      }
+  
+      setValidated(true);
+    };
 
     async function save(event) {
         event.preventDefault();
@@ -46,7 +60,7 @@ const Register = () => {
             <HomeHeader/>
             <Row >
                 <Col lg="6" className='register-container'>
-                    <Form>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
                         <InputGroup 
                         className="mb-4"
                         value={email}
@@ -54,14 +68,15 @@ const Register = () => {
                             setEmail(event.target.value);
                         }}
                         >
-                            <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
-                            <Form.Control
-                                type="email"
-                                placeholder="Email"
-                                aria-describedby="user-addon"
-                            />
+                        <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
+                        <Form.Control
+                            required
+                            type="email"
+                            placeholder="Email"
+                            aria-describedby="user-addon"
+                        />
                         </InputGroup>
-                        
+    
                         <InputGroup 
                         className="mb-3"
                         value={password}
@@ -71,6 +86,7 @@ const Register = () => {
                         >
                         <InputGroup.Text id="lock-addon"><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
                         <Form.Control
+                            required
                             type="password"
                             placeholder="Password"
                             aria-describedby="lock-addon"
@@ -86,6 +102,7 @@ const Register = () => {
                         >
                         <InputGroup.Text id="signature-addon"><FontAwesomeIcon icon={faSignature}/></InputGroup.Text>
                         <Form.Control
+                            required
                             placeholder="Name"
                             aria-describedby="signature-addon"
                         />
@@ -100,13 +117,14 @@ const Register = () => {
                         >
                         <InputGroup.Text id="signature-addon"><FontAwesomeIcon icon={faSignature}/></InputGroup.Text>
                         <Form.Control
+                            required
                             placeholder="Surname"
                             aria-describedby="signature-addon"
                         />
                         </InputGroup>
                         <Button 
-                        onClick={save}
-                        className="log-buttons" variant="dark" size="lg" type="button"><FontAwesomeIcon icon={faAddressCard}/> Register</Button>
+                        type="submit"
+                        className="log-buttons" variant="dark" size="lg" ><FontAwesomeIcon icon={faAddressCard}/> Register</Button>
                     </Form>
                 </Col>
                 <Col lg="6" className="man-img-container">

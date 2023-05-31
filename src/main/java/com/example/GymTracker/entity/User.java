@@ -39,6 +39,7 @@ public class User implements UserDetails {
     private String surname;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Workout> workouts;
 
     @JsonManagedReference

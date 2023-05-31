@@ -15,19 +15,27 @@ import 'react-responsive-datepicker/dist/index.css'
 
 import { useParams } from "react-router-dom";
 import { useState, useEffect, onChange, value } from "react";
+import AddWorkout from "../addWorkout/AddWorkout";
+import axios from "axios";
+import EditWorkout from "../editWorkout/EditWorkout";
 
 const Workout = () => {
-    const [isOpen, setIsOpen] = React.useState(false)
+    const [isOpen, setIsOpen] = React.useState(false);
+    const [isAddOpen, setIsAddOpen] = React.useState(false);
+    const [isEditOpen, setIsEditOpen] = React.useState(false);
+
     const [pickedDate, setpickedDate] = useState(new Date());
     const [textDate, settextDate] = useState();
+    
     const [workouts, setWorkouts] = useState();
+    const [myWorkouts, setMyWorkouts] = useState();
     
     const handleShowClick = () => {
         let month = pickedDate.getMonth() + 1;
         let day = pickedDate.getDate();
         let date = pickedDate.getFullYear() + "-" + month + "-" + day;
         settextDate(date);
-        fetch('http://localhost:8080/api/workouts/' + date)
+        fetch("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email"))
             .then((response) => response.json())
             .then((data) => {
                 console.log(data);
@@ -46,6 +54,39 @@ const Workout = () => {
         return days[day];        
     }
 
+    const [exercises, setExercises] = useState();
+    
+    const addClick = () => {
+        setIsAddOpen(!isAddOpen);
+        if(!isAddOpen)
+            axios.get("http://localhost:8080/api/exercises/").then((res) =>
+        {
+         console.log(res.data);
+         setExercises(res.data);
+        }
+       , fail => {
+       console.error(fail); // Error!
+});
+    }
+
+    const updateClick = () => {
+        setIsEditOpen(!isEditOpen);
+        let month = pickedDate.getMonth() + 1;
+        let day = pickedDate.getDate();
+        let date = pickedDate.getFullYear() + "-" + month + "-" + day;
+        settextDate(date);
+        if(!isEditOpen)
+            axios.get("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email")).then((res) =>
+        {
+         console.log(res.data);
+         setMyWorkouts(res.data);
+        }
+       , fail => {
+       console.error(fail); // Error!
+});
+    }
+
+
     return (
         <Container fluid="lg">
             <Header />
@@ -60,12 +101,20 @@ const Workout = () => {
                             </ListGroup.Item>
                             <hr />
                             <ListGroup.Item>
-                                <h3>Add</h3>
+                                <h3 onClick=
+                                    {addClick}
+                                >
+                                Add</h3>
                             </ListGroup.Item>
+                            {isAddOpen ? <AddWorkout exercises={exercises}/> : null}
                             <hr />
                             <ListGroup.Item>
-                                <h3>Edit</h3>
+                                <h3 onClick=
+                                    {updateClick}
+                                >
+                                Edit</h3>
                             </ListGroup.Item>
+                            {isEditOpen ? <EditWorkout myWorkouts={myWorkouts}/> : null}
                             <hr />
                         </ListGroup>
                     </Col>
@@ -102,9 +151,10 @@ const Workout = () => {
                     {Array.isArray(workouts) ?
                         workouts?.map((workout, i) => 
                         <div key={i} className="workout-data bg-color">
+        
                         <ListGroup className="bg-color">
                             <ListGroup.Item >
-                                <h4 className="bg-color">{workout.exercise.name}</h4>
+                                <h4 className="bg-color">{workout.exercise}</h4>
                                 <br/>
                                 <p className="bg-color">reps: {workout.reps}</p>
                                 <p className="bg-color">weight: {workout.weight}</p>

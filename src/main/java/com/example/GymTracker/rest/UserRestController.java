@@ -9,7 +9,7 @@ import java.util.List;
 
 @RestController
 @CrossOrigin(origins= "*")
-@RequestMapping("/api")
+@RequestMapping("/api/users")
 public class UserRestController {
     private UserService userService;
 
@@ -18,26 +18,26 @@ public class UserRestController {
         this.userService = userService;
     }
 
-    @GetMapping("/users")
+    @GetMapping("/")
     public List<User> getUsers(){
         return userService.getUsers();
     }
-    @GetMapping("/users/{id}")
+    @GetMapping("/{id}")
     public User getUser(@PathVariable("id") int id){
         return userService.getUser(id);
     }
 
-    @GetMapping("/users/email/{email}")
+    @GetMapping("/email/{email}")
     public User getUserByEmail(@PathVariable("email") String email){
         return userService.getUserByEmail(email);
     }
-    @PostMapping("/users")
+    @PostMapping("/")
     public User addUser(@RequestBody User user){
         user.setId(0);
         return userService.addUser(user);
     }
 
-    @PutMapping("/users")
+    @PutMapping("/")
     public User updateUser(@RequestBody User user){
         return userService.updateUser(user);
     }

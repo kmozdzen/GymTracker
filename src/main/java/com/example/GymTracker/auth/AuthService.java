@@ -1,6 +1,8 @@
 package com.example.GymTracker.auth;
 
+import com.example.GymTracker.dao.RoleRepository;
 import com.example.GymTracker.dao.UserRepository;
+import com.example.GymTracker.entity.Role;
 import com.example.GymTracker.security.JwtService;
 import com.example.GymTracker.token.TokeType;
 import com.example.GymTracker.token.Token;
@@ -18,6 +20,8 @@ import com.example.GymTracker.entity.User;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -28,6 +32,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
+    private final RoleRepository roleRepository;
 
     public AuthResponse register(RegisterRequest request) {
         User user = new User();
@@ -35,7 +40,18 @@ public class AuthService {
         user.setPassword(passwordEncoder.encode(request.getPassword()));
         user.setName(request.getName());
         user.setSurname(request.getSurname());
+
+        Role role = roleRepository.findByName("ROLE_USER");
+        List<Role> roles = new ArrayList<>();
+        roles.add(role);
+
+        user.setRoles(roles);
         var savedUser = repository.save(user);
+
+        List<User> users = role.getUsers();
+        users.add(savedUser);
+        role.setUsers(users);
+
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);
         saveUserToken(savedUser, jwtToken);
