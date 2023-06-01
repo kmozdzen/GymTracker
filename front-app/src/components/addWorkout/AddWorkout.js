@@ -5,12 +5,15 @@ import { useState } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+const headers = { 'Authorization': 'Bearer ' + localStorage.getItem("token")};
+
 const AddWorkout = (props) => {
     const [reps, setReps] = useState("");
     const [weight, setWeight] = useState("");
-    const [selected, setSelected] = useState(null);
+    const [selected, setSelected] = useState("")
     const [validated, setValidated] = useState(false);
 
+    
     const handleSubmit = (event) => {
       const form = event.currentTarget;
       if (form.checkValidity() === false) {
@@ -24,13 +27,14 @@ const AddWorkout = (props) => {
 
     async function add(event) {
         event.preventDefault();
+        console.log(localStorage.getItem("token"))
         try {
           await axios.post("http://localhost:8080/api/workouts/", {
             reps: reps,
             weight: weight,
             email: localStorage.getItem("email"),
             exercise: selected
-            }).then((res) =>
+            }, {headers}).then((res) =>
             {
              console.log(res.data);
           }, fail => {
@@ -46,40 +50,46 @@ const AddWorkout = (props) => {
 
 
     return (
-        <div>
-            <Form.Select aria-label="Default select example" value={selected} onChange={e => {
+        <div className="add-container">
+            <Form.Select
+              data-bs-max-options="5"
+              className="add-select" 
+              size="md"
+              value={selected} 
+              onChange={e => {
                 setSelected(e.target.value);
+                
           }}>
             {props.exercises?.map((exercise, index) => 
                 <option key={index} value={exercise.name}>{exercise.name}</option>
              )}
             </Form.Select>
             <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                <Row className="mb-3">
-                    <Form.Group as={Col} md="4" controlId="validationCustom01">
+                <Row className="mb-3 justify-content-md-center bg-color">
+                    <Form.Group as={Col} md="3" controlId="validationCustom01" className="add-col bg-color">
                         <Form.Label>Reps</Form.Label>
                         <Form.Control
                             required
                             type="number"
-                            placeholder="reps"
+                            placeholder="0"
                             value={reps}
                             onChange={(event) => {setReps(event.target.value)}}
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
-                    <Form.Group as={Col} md="4" controlId="validationCustom02">
+                    <Form.Group as={Col} md="3" controlId="validationCustom02" className="add-col bg-color">
                         <Form.Label>Weight</Form.Label>
                         <Form.Control
                             required
                             type="number"
-                            placeholder="weight"
+                            placeholder="0"
                             value={weight}
                             onChange={(event) => {setWeight(event.target.value)}}
                         />
                         <Form.Control.Feedback>Looks good!</Form.Control.Feedback>
                     </Form.Group>
                 </Row>
-                <Button type="submit">OK</Button>  
+                <Button className="ok-button" type="submit">OK</Button>  
             </Form>        
         </div>
     );

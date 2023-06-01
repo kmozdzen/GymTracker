@@ -18,6 +18,7 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faSignature } from '@fortawesome/free-solid-svg-icons';
 import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState("");
@@ -25,6 +26,9 @@ const Register = () => {
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
     const [validated, setValidated] = useState(false);
+    const [error, setError] = useState(false);
+
+    const navigate = useNavigate();
 
     const handleSubmit = (event) => {
       const form = event.currentTarget;
@@ -47,13 +51,24 @@ const Register = () => {
           password: password,
           name: name,
           surname: surname,
-          });
-          alert("Registation Successfully");
+          }).then((res) => {
+            if(res.data.message === "Success"){
+                alert("Success");
+                navigate('/');
+            }else{
+                setError(true);
+            }
+          }, fail => {
+            console.error(fail); // Error!
+        });
+                }
+        
+                catch (err) {
+                alert(err);
+                }
+            
+            }
  
-        } catch (err) {
-          alert(err);
-        }
-      }
 
     return (
         <Container fluid="md">
@@ -61,8 +76,10 @@ const Register = () => {
             <Row >
                 <Col lg="6" className='register-container'>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                        {error ? <p className='error-text'>Email exists</p> : null}
                         <InputGroup 
-                        className="mb-4"
+                        className="mb-3"
+                        size="lg"
                         value={email}
                         onChange={(event) => {
                             setEmail(event.target.value);
@@ -79,6 +96,7 @@ const Register = () => {
     
                         <InputGroup 
                         className="mb-3"
+                        size="lg"
                         value={password}
                         onChange={(event) => {
                             setPassword(event.target.value);
@@ -95,6 +113,7 @@ const Register = () => {
 
                         <InputGroup 
                         className="mb-3"
+                        size="lg"
                         value={name}
                         onChange={(event) => {
                             setName(event.target.value);
@@ -110,6 +129,7 @@ const Register = () => {
 
                         <InputGroup 
                         className="mb-3"
+                        size="lg"
                         value={surname}
                         onChange={(event) => {
                             setSurname(event.target.value);

@@ -4,6 +4,7 @@ package com.example.GymTracker.auth;
 import com.example.GymTracker.dao.UserRepository;
 import com.example.GymTracker.entity.User;
 import com.example.GymTracker.message.LoginMessage;
+import com.example.GymTracker.message.RegisterMessage;
 import com.example.GymTracker.token.Token;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.Optional;
 
 
@@ -29,10 +31,15 @@ public class AuthController {
     }
 
     @PostMapping("/register")
-    public ResponseEntity<AuthResponse> register(
+    public RegisterMessage register(
             @RequestBody RegisterRequest request
     ) {
-        return ResponseEntity.ok(service.register(request));
+        try {
+            ResponseEntity.ok(service.register(request));
+            return new RegisterMessage("Success", true);
+        }catch (Exception exception){
+            return new RegisterMessage("Failed", false);
+        }
     }
     @PostMapping("/authenticate")
     public LoginMessage authenticate(@RequestBody AuthRequest request) {

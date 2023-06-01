@@ -1,7 +1,7 @@
 package com.example.GymTracker.service.workoutService;
 
 import com.example.GymTracker.entity.Workout;
-import com.example.GymTracker.webUser.WebWorkout;
+import com.example.GymTracker.request.WebWorkout;
 
 import java.text.ParseException;
 import java.util.Date;

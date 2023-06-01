@@ -4,8 +4,6 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { Nav } from 'react-bootstrap';
 import axios from 'axios';
-import { Navigate } from 'react-router-dom';
-import { Link } from 'react-router-dom';
 import './Header.css'
 const Header = () => {
 

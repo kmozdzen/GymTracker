@@ -38,23 +38,34 @@ const Exercise = () => {
                 <h2 className="exercsies-title">Exercises</h2>
                 <hr />
                 <div className="cards-container">
-                {
-                    data.map((exerciseCard, index) =>{
-                        return <Card style={{ width: '18rem' }} key={index}>
-                        <Card.Img variant="top" src={exerciseCard.img} />
-                        <Card.Body>
-                            <Card.Title><a className="muscle-name" href={exerciseCard.muscle}>{exerciseCard.muscle.toUpperCase()}</a></Card.Title>
-                        </Card.Body>
-                        </Card>
-                    })
-                } 
+                    <Row className="justify-content-md-center">
+                    {
+                        data.map((exerciseCard, index) =>{
+                            return (<Col md={4}>
+                                <Card style={{ width: '18rem' }} key={index}>
+                                <Card.Link href={exerciseCard.muscle}>
+                                <Card.Img variant="top" src={exerciseCard.img} />
+                                <Card.Body>
+                                    <Card.Title><span className="muscle-name" >{exerciseCard.muscle.toUpperCase()}</span></Card.Title>
+                                </Card.Body>
+                                </Card.Link>
+                                </Card>
+                            </Col>
+                         )})
+                    } 
+                    </Row>
                 </div>
             </div>
             <div className="exercises-content">
-                <h4 className="muscle-title">{name.toUpperCase()}</h4>
+                {data.findIndex(e => e.muscle === name) !== -1
+                    ?
+                    <h3 className="muscle-title">{name.toUpperCase()}</h3>
+                    :
+                    null
+                }
                 {exercises?.map((exercise, index) => 
                     <div key={index}>
-                        <p><span className="text-label">Name: </span> {exercise.name}</p>
+                        <p><span className="text-label">Name: </span><span className="text-exercise-name">{exercise.name}</span></p>
                         <p><span className="text-label">Equipment: </span> {exercise.equipment}</p>
                         <p><span className="text-label">Difficulty: </span> {exercise.difficulty}</p>
                         <p><span className="text-label">Instructions: </span> {exercise.instructions}</p>

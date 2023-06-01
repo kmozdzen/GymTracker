@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SortComparator;
 
 import java.util.List;
 
@@ -39,4 +40,5 @@ public class Exercise {
     @JsonIgnore
     @OneToMany(mappedBy = "exercise")
     private List<Workout> workouts;
+
 }

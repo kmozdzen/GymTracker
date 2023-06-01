@@ -1,8 +1,6 @@
 package com.example.GymTracker.service.exerciseService;
 
 import com.example.GymTracker.entity.Exercise;
-import com.example.GymTracker.webUser.WebExercise;
-import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 

@@ -9,24 +9,7 @@ import { ListGroup } from 'react-bootstrap';
 
 import Header from '../header/Header';
 
-import { useState } from 'react';
-import { useEffect } from 'react';
-
 const Profile = () => {
-    // const [user, setUser] = useState();
-
-    //  useEffect(() => {
-    //     fetch('http://localhost:8080/api/users/email/' + localStorage.getItem("email"))
-    //        .then((response) => response.json())
-    //        .then((data) => {
-    //            console.log(data);
-    //           setUser(data);
-    //        })
-    //        .catch((err) => {
-    //            console.log(err.message);
-    //        });
-    //  }, []);
-
     let email = localStorage.getItem("email");
     let name = localStorage.getItem("name");
     let surname = localStorage.getItem("surname");
@@ -40,21 +23,27 @@ const Profile = () => {
             </div>
             <div className="profile-content">
                 <ListGroup className="user-data-list" variant="flush">
-                    <ListGroup.Item>
-                        <h3>Email:</h3>
-                        <h4 >{email}</h4>
+                    <ListGroup.Item className="user-data-list-item">
+                        <div className="data-item">
+                            <h2>Email:</h2>
+                            <p>{email}</p> 
+                        </div>
+                        <hr />
                     </ListGroup.Item>
-                    <hr />
-                    <ListGroup.Item>
-                        <h3>Name:</h3>
-                        <h4 >{name}</h4>
+                    <ListGroup.Item className="user-data-list-item">
+                        <div className="data-item">
+                            <h2>Name:</h2>
+                            <p>{name}</p>
+                        </div>
+                        <hr />
                     </ListGroup.Item>
-                    <hr />
-                    <ListGroup.Item>
-                        <h3>Surname:</h3>
-                        <h4 >{surname}</h4>
+                    <ListGroup.Item className="user-data-list-item">
+                        <div className="data-item">
+                            <h2>Surname:</h2>
+                            <p>{surname}</p>
+                        </div>
+                        <hr />
                     </ListGroup.Item>
-                    <hr />
                 </ListGroup>
             </div>
         </div>

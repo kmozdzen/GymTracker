@@ -10,8 +10,7 @@
 
 .user-data-list
 {
-    width: 70%;
-    gap: 10px;
+    width: 60%;
     margin: auto
 }
 
@@ -38,14 +37,38 @@
     transform: translate(-50%, -50%);
 }
 
-h3
+h2
 {
-    color: #FFD700;
+    color: #FFD700 !important;
     background: none;
     opacity: 100%;
 }
 
-.list-group-item
+.user-data-list-item
 {
     background: none !important;
+    border: none !important;
+    margin: 15px !important;
+}
+
+div svg path{
+    color: #00B6B7;
+}
+
+.data-item
+{
+    display: flex;
+    justify-content: space-between;
+}
+
+.data-item p
+{
+    font-size: 1.5rem;
+    margin: auto;
+    margin-right: 0px;
+}
+
+hr
+{
+    margin-top: 0px !important;
 }

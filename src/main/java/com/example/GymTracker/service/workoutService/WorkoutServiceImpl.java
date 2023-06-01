@@ -6,19 +6,17 @@ import com.example.GymTracker.dao.WorkoutRepository;
 import com.example.GymTracker.entity.Exercise;
 import com.example.GymTracker.entity.User;
 import com.example.GymTracker.entity.Workout;
-import com.example.GymTracker.webUser.WebWorkout;
+import com.example.GymTracker.request.WebWorkout;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.time.LocalDate;
+
 @Service
 public class WorkoutServiceImpl implements WorkoutService{
     private WorkoutRepository workoutRepository;

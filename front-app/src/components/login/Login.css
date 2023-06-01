@@ -4,24 +4,24 @@
     border-radius: 20px;
 
     text-align: center;
+    display: flex;
+
 }
 
 form
 {
-    margin: 100px 100px;
+    margin: auto;
     background-color: #00B6B7;
 }
 
 .fa-user-large
 {
-    color: #00B6B7;
     margin: auto;
     font-size: 1.8rem;
 }
 
 .fa-lock, .fa-signature
 {
-    color: #00B6B7;
     margin: auto;
     font-size: 2rem;
 }
@@ -30,7 +30,6 @@ form
 {
     border-radius: 20px;
 }
-
 
 .form-control::placeholder
 {
@@ -49,7 +48,12 @@ form
     background-color: #050D54;
 }
 
-svg
+span svg path{
+    color: #00B6B7;
+}
+
+.error-text
 {
-    background: none;
+    background-color: #00B6B7;
+    color: red;
 }

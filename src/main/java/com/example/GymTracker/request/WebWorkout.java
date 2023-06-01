@@ -1,4 +1,4 @@
-package com.example.GymTracker.webUser;
+package com.example.GymTracker.request;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

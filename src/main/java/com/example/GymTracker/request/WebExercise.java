@@ -1,11 +1,7 @@
-package com.example.GymTracker.webUser;
+package com.example.GymTracker.request;
 
-import com.example.GymTracker.entity.Workout;
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import jakarta.persistence.*;
 import lombok.*;
 
-import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Setter

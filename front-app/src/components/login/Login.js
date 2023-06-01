@@ -15,14 +15,12 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faRightToBracket } from '@fortawesome/free-solid-svg-icons';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
-
-
 const Login = () => {
-
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [noEmail, setNoEmail] = useState(false);
@@ -71,14 +69,14 @@ const Login = () => {
              
           }, fail => {
            console.error(fail); // Error!
-  });
+    });
+            }
+    
+            catch (err) {
+            alert(err);
+            }
+        
         }
- 
-         catch (err) {
-          alert(err);
-        }
-      
-      }
 
     return (
         <Container fluid="md">
@@ -86,10 +84,11 @@ const Login = () => {
             <Row >
                 <Col lg="6" className='login-container'>
                     <Form noValidate validated={validated} onSubmit={handleSubmit}>
-                        {noEmail ? <p>Email not exists</p> : null}
-                        {error ? <p>Wrong password</p> : null}
+                        {noEmail ? <p className='error-text'>Email not exists</p> : null}
+                        {error ? <p className='error-text'>Wrong password</p> : null}
                         <InputGroup 
-                        className="mb-4"
+                        className="mb-4 "
+                        size="lg"
                         value={email}
                         onChange={(event) => {
                             setEmail(event.target.value);
@@ -107,12 +106,13 @@ const Login = () => {
                         
                         <InputGroup 
                         className="mb-4"
+                        size="lg"
                         value={password}
                         onChange={(event) => {
                             setPassword(event.target.value);
                         }}
                         >
-                        <InputGroup.Text id="lock-addon"><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
+                        <InputGroup.Text id="lock-addon"><FontAwesomeIcon className="icon-color" icon={faLock}/></InputGroup.Text>
                         <Form.Control
                             required
                             type="password"

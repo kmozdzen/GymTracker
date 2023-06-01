@@ -19,6 +19,8 @@ import AddWorkout from "../addWorkout/AddWorkout";
 import axios from "axios";
 import EditWorkout from "../editWorkout/EditWorkout";
 
+const headers = { 'Authorization': 'Bearer ' + localStorage.getItem("token")};
+
 const Workout = () => {
     const [isOpen, setIsOpen] = React.useState(false);
     const [isAddOpen, setIsAddOpen] = React.useState(false);
@@ -31,21 +33,21 @@ const Workout = () => {
     const [myWorkouts, setMyWorkouts] = useState();
     
     const handleShowClick = () => {
-        let month = pickedDate.getMonth() + 1;
-        let day = pickedDate.getDate();
-        let date = pickedDate.getFullYear() + "-" + month + "-" + day;
-        settextDate(date);
-        fetch("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email"))
-            .then((response) => response.json())
-            .then((data) => {
-                console.log(data);
-                console.log(date);
-                console.log(pickedDate);
-                setWorkouts(data);
-            })
-            .catch((err) => {
-                console.log(err.message);
-            });
+        console.log(localStorage.getItem("token"))
+        try{
+            let month = pickedDate.getMonth() + 1;
+            let day = pickedDate.getDate();
+            let date = pickedDate.getFullYear() + "-" + month + "-" + day;
+            settextDate(date);
+            fetch("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email"), {headers})
+                .then((response) => response.json())
+                .then((data) => {
+                    setWorkouts(data);
+                })
+                .catch((err) => {
+                    console.log(err.message);
+                });
+        }catch(exc){}
      };
 
      function getDayName(day)
@@ -76,7 +78,7 @@ const Workout = () => {
         let date = pickedDate.getFullYear() + "-" + month + "-" + day;
         settextDate(date);
         if(!isEditOpen)
-            axios.get("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email")).then((res) =>
+            axios.get("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email"), {headers}).then((res) =>
         {
          console.log(res.data);
          setMyWorkouts(res.data);
@@ -96,20 +98,20 @@ const Workout = () => {
                 <Row className="row workout-content">
                     <Col lg="6" className="bg-color">
                         <ListGroup className="bg-color">
-                            <ListGroup.Item>
-                                <h3 onClick={handleShowClick}>Show</h3>
+                            <ListGroup.Item className="action-list-item">
+                                <h3 className="action-element" onClick={handleShowClick}>Show</h3>
                             </ListGroup.Item>
                             <hr />
-                            <ListGroup.Item>
-                                <h3 onClick=
+                            <ListGroup.Item className="action-list-item">
+                                <h3 className="action-element" onClick=
                                     {addClick}
                                 >
                                 Add</h3>
-                            </ListGroup.Item>
+                            </ListGroup.Item >
                             {isAddOpen ? <AddWorkout exercises={exercises}/> : null}
                             <hr />
-                            <ListGroup.Item>
-                                <h3 onClick=
+                            <ListGroup.Item className="action-list-item">
+                                <h3 className="action-element" onClick=
                                     {updateClick}
                                 >
                                 Edit</h3>
@@ -132,9 +134,9 @@ const Workout = () => {
                             isOpen={isOpen}
                             onChange={setpickedDate}
                             onClose={() => setIsOpen(false)}
-                            defaultValue={new Date(2023, 4, 5)}
-                            minDate={new Date(2022, 10, 10)}
-                            maxDate={new Date(2023, 10, 10)}
+                            defaultValue={new Date(2022, 6-1, 1)}
+                            minDate={new Date(2022, 5-1, 1)}
+                            maxDate={new Date(2023, 10-1, 1)}
                             headerFormat='DD, MM dd'
                         />
                         </div>
@@ -153,7 +155,7 @@ const Workout = () => {
                         <div key={i} className="workout-data bg-color">
         
                         <ListGroup className="bg-color">
-                            <ListGroup.Item >
+                            <ListGroup.Item className="exercise-item" >
                                 <h4 className="bg-color">{workout.exercise}</h4>
                                 <br/>
                                 <p className="bg-color">reps: {workout.reps}</p>
