@@ -9,8 +9,11 @@ import { ListGroup } from 'react-bootstrap';
 
 import Header from '../header/Header';
 
-const Profile = ({user}) => {
-    if(user === undefined) {return}
+const Profile = () => {
+    let email = localStorage.getItem("email");
+    let name = localStorage.getItem("name");
+    let surname = localStorage.getItem("surname");
+
     return (
         <Container fluid="lg">
         <Header />
@@ -20,21 +23,27 @@ const Profile = ({user}) => {
             </div>
             <div className="profile-content">
                 <ListGroup className="user-data-list" variant="flush">
-                    <ListGroup.Item>
-                        <h3>Email:</h3>
-                        <h4 >{user.email}</h4>
+                    <ListGroup.Item className="user-data-list-item">
+                        <div className="data-item">
+                            <h2>Email:</h2>
+                            <p>{email}</p> 
+                        </div>
+                        <hr />
                     </ListGroup.Item>
-                    <hr />
-                    <ListGroup.Item>
-                        <h3>Name:</h3>
-                        <h4 >{user.name}</h4>
+                    <ListGroup.Item className="user-data-list-item">
+                        <div className="data-item">
+                            <h2>Name:</h2>
+                            <p>{name}</p>
+                        </div>
+                        <hr />
                     </ListGroup.Item>
-                    <hr />
-                    <ListGroup.Item>
-                        <h3>Surname:</h3>
-                        <h4 >{user.surname}</h4>
+                    <ListGroup.Item className="user-data-list-item">
+                        <div className="data-item">
+                            <h2>Surname:</h2>
+                            <p>{surname}</p>
+                        </div>
+                        <hr />
                     </ListGroup.Item>
-                    <hr />
                 </ListGroup>
             </div>
         </div>

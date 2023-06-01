@@ -18,12 +18,30 @@ import { faUserAlt } from '@fortawesome/free-solid-svg-icons';
 import { faLock } from '@fortawesome/free-solid-svg-icons';
 import { faSignature } from '@fortawesome/free-solid-svg-icons';
 import { faAddressCard } from '@fortawesome/free-regular-svg-icons';
+import { useNavigate } from 'react-router-dom';
 
 const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [name, setName] = useState("");
     const [surname, setSurname] = useState("");
+    const [validated, setValidated] = useState(false);
+    const [error, setError] = useState(false);
+
+    const navigate = useNavigate();
+
+    const handleSubmit = (event) => {
+      const form = event.currentTarget;
+      if (form.checkValidity() === false) {
+        event.preventDefault();
+        event.stopPropagation();
+      }
+      else{
+        save(event);
+      }
+  
+      setValidated(true);
+    };
 
     async function save(event) {
         event.preventDefault();
@@ -33,37 +51,52 @@ const Register = () => {
           password: password,
           name: name,
           surname: surname,
-          });
-          alert("Registation Successfully");
+          }).then((res) => {
+            if(res.data.message === "Success"){
+                alert("Success");
+                navigate('/');
+            }else{
+                setError(true);
+            }
+          }, fail => {
+            console.error(fail); // Error!
+        });
+                }
+        
+                catch (err) {
+                alert(err);
+                }
+            
+            }
  
-        } catch (err) {
-          alert(err);
-        }
-      }
 
     return (
         <Container fluid="md">
             <HomeHeader/>
             <Row >
                 <Col lg="6" className='register-container'>
-                    <Form>
+                    <Form noValidate validated={validated} onSubmit={handleSubmit}>
+                        {error ? <p className='error-text'>Email exists</p> : null}
                         <InputGroup 
-                        className="mb-4"
+                        className="mb-3"
+                        size="lg"
                         value={email}
                         onChange={(event) => {
                             setEmail(event.target.value);
                         }}
                         >
-                            <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
-                            <Form.Control
-                                type="email"
-                                placeholder="Email"
-                                aria-describedby="user-addon"
-                            />
+                        <InputGroup.Text id="user-addon"><FontAwesomeIcon icon={faUserAlt}/></InputGroup.Text>
+                        <Form.Control
+                            required
+                            type="email"
+                            placeholder="Email"
+                            aria-describedby="user-addon"
+                        />
                         </InputGroup>
-                        
+    
                         <InputGroup 
                         className="mb-3"
+                        size="lg"
                         value={password}
                         onChange={(event) => {
                             setPassword(event.target.value);
@@ -71,6 +104,7 @@ const Register = () => {
                         >
                         <InputGroup.Text id="lock-addon"><FontAwesomeIcon icon={faLock}/></InputGroup.Text>
                         <Form.Control
+                            required
                             type="password"
                             placeholder="Password"
                             aria-describedby="lock-addon"
@@ -79,6 +113,7 @@ const Register = () => {
 
                         <InputGroup 
                         className="mb-3"
+                        size="lg"
                         value={name}
                         onChange={(event) => {
                             setName(event.target.value);
@@ -86,6 +121,7 @@ const Register = () => {
                         >
                         <InputGroup.Text id="signature-addon"><FontAwesomeIcon icon={faSignature}/></InputGroup.Text>
                         <Form.Control
+                            required
                             placeholder="Name"
                             aria-describedby="signature-addon"
                         />
@@ -93,6 +129,7 @@ const Register = () => {
 
                         <InputGroup 
                         className="mb-3"
+                        size="lg"
                         value={surname}
                         onChange={(event) => {
                             setSurname(event.target.value);
@@ -100,13 +137,14 @@ const Register = () => {
                         >
                         <InputGroup.Text id="signature-addon"><FontAwesomeIcon icon={faSignature}/></InputGroup.Text>
                         <Form.Control
+                            required
                             placeholder="Surname"
                             aria-describedby="signature-addon"
                         />
                         </InputGroup>
                         <Button 
-                        onClick={save}
-                        className="log-buttons" variant="dark" size="lg" type="button"><FontAwesomeIcon icon={faAddressCard}/> Register</Button>
+                        type="submit"
+                        className="log-buttons" variant="dark" size="lg" ><FontAwesomeIcon icon={faAddressCard}/> Register</Button>
                     </Form>
                 </Col>
                 <Col lg="6" className="man-img-container">

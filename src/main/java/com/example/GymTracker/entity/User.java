@@ -26,7 +26,7 @@ public class User implements UserDetails {
     @Column(name = "id")
     private int id;
 
-    @Column(name = "email")
+    @Column(name = "email", unique = true)
     private String email;
 
     @Column(name = "password")
@@ -39,6 +39,7 @@ public class User implements UserDetails {
     private String surname;
 
     @OneToMany(mappedBy = "user")
+    @JsonIgnore
     private List<Workout> workouts;
 
     @JsonManagedReference

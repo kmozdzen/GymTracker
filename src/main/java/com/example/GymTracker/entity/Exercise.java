@@ -1,8 +1,10 @@
 package com.example.GymTracker.entity;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.SortComparator;
 
 import java.util.List;
 
@@ -35,6 +37,8 @@ public class Exercise {
     private String instructions;
 
     @JsonBackReference
+    @JsonIgnore
     @OneToMany(mappedBy = "exercise")
     private List<Workout> workouts;
+
 }

@@ -2,16 +2,15 @@ package com.example.GymTracker.rest;
 
 import com.example.GymTracker.entity.Exercise;
 import com.example.GymTracker.service.exerciseService.ExerciseService;
-import com.example.GymTracker.webUser.WebExercise;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 @CrossOrigin(origins= "http://localhost:3000" )
-@RequestMapping("api/exercises")
+@RequestMapping(value = "api/exercises", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ExerciseRestController {
     private ExerciseService exerciseService;
 

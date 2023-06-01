@@ -8,10 +8,9 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-import org.springframework.security.web.authentication.logout.LogoutHandler;
+
 
 @Configuration
 @EnableWebSecurity
@@ -19,22 +18,22 @@ import org.springframework.security.web.authentication.logout.LogoutHandler;
 public class DefaultSecurityConfig {
     private final JwtAuthenticationFilter jwtAuthFilter;
     private final AuthenticationProvider authenticationProvider;
-    private final LogoutHandler logoutHandler;
+
 
     @Autowired
-    public DefaultSecurityConfig(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider, LogoutHandler logoutHandler) {
+    public DefaultSecurityConfig(JwtAuthenticationFilter jwtAuthFilter, AuthenticationProvider authenticationProvider) {
         this.jwtAuthFilter = jwtAuthFilter;
         this.authenticationProvider = authenticationProvider;
-        this.logoutHandler = logoutHandler;
     }
+
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf()
-                .and()
-                .cors()
                 .disable()
+                .cors()
+                .and()
                 .authorizeHttpRequests()
                 .requestMatchers(
                         "/api/v1/auth/**",
@@ -47,9 +46,20 @@ public class DefaultSecurityConfig {
                         "/configuration/security",
                         "/swagger-ui/**",
                         "/webjars/**",
-                        "/swagger-ui.html"
+                        "/swagger-ui.html",
+                        "/api/exercises",
+                        "/api/exercises/**",
+                        "/api/admin",
+                        "/api/admin/**"
                 )
                 .permitAll()
+                .requestMatchers(
+                        "/api/workouts",
+                        "/api/workouts/**",
+                        "/api/users",
+                        "/api/users/**"
+                )
+                .authenticated()
                 .anyRequest()
                 .authenticated()
                 .and()
@@ -57,13 +67,7 @@ public class DefaultSecurityConfig {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authenticationProvider(authenticationProvider)
-                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout()
-                .logoutUrl("/api/v1/auth/logout")
-                .addLogoutHandler(logoutHandler)
-                .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
-        ;
-
+                .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class);
         return http.build();
     }
 }

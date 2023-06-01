@@ -14,22 +14,24 @@
     justify-content: center;
 }
 
-.list-group-item
+.action-list-item
 {
     border: none !important; 
-    margin: auto;
-    margin: 30px;
+    background-color: #00B6B7 !important;
+    margin: 20px;
+    margin-bottom: 0px;
 }
 
-.bg-color
+.bg-color, .valid-feedback
 {
     background-color: #00B6B7;
 }
 
+
 .workout-title
 {
+    color: white !important;
     font-size: 4rem;
-    background: none;
 }
 
 .calendar-col
@@ -47,15 +49,19 @@
     background: none;
 }
 
-h3
+.action-element
 {
-    color: white;
-    margin: auto;
+    background-color: #00B6B7;
+    font-size: 2.5rem !important;
+    transition: font-size .3s ease-in-out;
 }
 
-h3:hover
+.action-element:hover
 {
     cursor: pointer;
+    font-size: 3rem !important;
+    color: black;
+    transition: font-size .3s ease-in-out, color .3s ease-in-out;
 }
 
 .muscle-name
@@ -68,3 +74,55 @@ h3:hover
 {
     font-size: 1.5rem;
 }
+
+.form-label
+{
+    background-color: #00B6B7;
+}
+
+.add-select
+{
+    width: 70% !important;
+    background-color: none !important;
+    margin: auto;
+}
+
+.add-col
+{
+    padding: 20px !important; 
+}
+
+.ok-button
+{
+    margin-bottom: 15px;
+}
+
+.add-container
+{
+    background-color: #00B6B7;
+}
+
+.exercise-item
+{
+    background-color: #00B6B7 !important;
+    border: none !important;
+}
+
+/* calc */
+
+._2KezC, ._NWZcI, ._38Og6
+{
+    background-color: rgb(69, 39, 160);
+}
+
+._yof3Q select
+{
+    background-color: black !important;
+}
+
+._24OKz button
+{
+    color: white !important;
+    font-weight: 500 !important;
+}
+
