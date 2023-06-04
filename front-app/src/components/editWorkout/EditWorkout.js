@@ -5,14 +5,13 @@ import { useState } from "react";
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
-const headers = { 'Authorization': 'Bearer ' + localStorage.getItem("token")};
-
-
 const EditWorkout = (props) => {
     const [reps, setReps] = useState("");
     const [weight, setWeight] = useState("");
     const [selected, setSelected] = useState(0);    
     const [validated, setValidated] = useState(false);
+
+    const headers = { 'Authorization': 'Bearer ' + localStorage.getItem("token")};
 
     const handleSubmit = (event) => {
       const form = event.currentTarget;
@@ -20,7 +19,6 @@ const EditWorkout = (props) => {
         event.preventDefault();
         event.stopPropagation();
       }else{
-        console.log(selected)
         update(event);
       }
       setValidated(true);
@@ -28,7 +26,6 @@ const EditWorkout = (props) => {
 
     async function update(event) {
         event.preventDefault();
-        console.log(localStorage.getItem("token"))
         try {
           await axios.put("http://localhost:8080/api/workouts/", {
             idWorkout: selected,
@@ -36,18 +33,17 @@ const EditWorkout = (props) => {
             weight: weight,
             email: localStorage.getItem("email")
             }, {headers}).then((res) =>
-            {
-             console.log(res.data);
+            { alert("Success");
           }, fail => {
-           console.error(fail); // Error!
-  });
+            console.error(fail); // Error!
+    });
+          }
+  
+          catch (err) {
+            alert(err);
+          }
+        
         }
- 
-         catch (err) {
-          alert(err);
-        }
-      
-      }
 
     return (
         <div className="add-container">

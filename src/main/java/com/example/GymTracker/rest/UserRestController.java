@@ -53,4 +53,9 @@ public class UserRestController {
         return userService.updateUser(user);
     }
 
+    @DeleteMapping("/{id}")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public void deleteExercise(@PathVariable("id") int id){
+        userService.deleteUser(id);
+    }
 }

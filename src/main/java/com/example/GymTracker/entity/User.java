@@ -1,5 +1,6 @@
 package com.example.GymTracker.entity;
 
+import com.example.GymTracker.token.Token;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
@@ -38,14 +39,17 @@ public class User implements UserDetails {
     @Column(name = "surname")
     private String surname;
 
-    @OneToMany(mappedBy = "user")
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<Workout> workouts;
 
     @JsonManagedReference
-    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users")
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "users",  cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private List<Role> roles;
 
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonIgnore
+    private List<Token> tokens;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {

@@ -38,7 +38,7 @@ public class Exercise {
 
     @JsonBackReference
     @JsonIgnore
-    @OneToMany(mappedBy = "exercise")
+    @OneToMany(mappedBy = "exercise", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Workout> workouts;
 
 }

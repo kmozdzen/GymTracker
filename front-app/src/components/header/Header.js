@@ -5,8 +5,9 @@ import { faArrowRightFromBracket } from '@fortawesome/free-solid-svg-icons'
 import { Nav } from 'react-bootstrap';
 import axios from 'axios';
 import './Header.css'
-const Header = () => {
-
+import { useState } from 'react';
+import { useEffect } from 'react';
+const Header = (props) => {
   const logout = () => axios.post('http://localhost:8080/api/v1/auth/logout',{
     token: localStorage.getItem("token")
   })

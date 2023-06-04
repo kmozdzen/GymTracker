@@ -29,6 +29,12 @@ public class AdminServiceImpl implements AdminService{
         User user = userRepository.findById(addRoleRequest.getId()).orElseThrow();
         Role role = roleRepository.findByName(addRoleRequest.getRole());
 
+        if(role == null || user == null)
+            return null;
+
+        if(user.getRoles().contains(role))
+            return new AddRoleRequest(user.getId(), role.getName(), "user already have this role");
+
         List<Role> roles = user.getRoles();
         roles.add(role);
         user.setRoles(roles);
@@ -38,6 +44,13 @@ public class AdminServiceImpl implements AdminService{
         role.setUsers(users);
 
         return addRoleRequest;
+    }
+
+    @Override
+    public boolean isAdmin(String email) {
+        User user = userRepository.findByEmail(email);
+        Role role = roleRepository.findByName("ROLE_ADMIN");
+        return user.getRoles().contains(role);
     }
 }
 

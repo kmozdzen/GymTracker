@@ -10,7 +10,7 @@
 
 form
 {
-    margin: auto;
+    margin: 100px auto;
     background-color: #00B6B7;
 }
 
@@ -52,7 +52,7 @@ span svg path{
     color: #00B6B7;
 }
 
-.error-text
+.error-text 
 {
     background-color: #00B6B7;
     color: red;

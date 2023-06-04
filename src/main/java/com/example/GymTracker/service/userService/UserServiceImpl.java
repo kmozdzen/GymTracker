@@ -2,6 +2,7 @@ package com.example.GymTracker.service.userService;
 
 import com.example.GymTracker.dao.UserRepository;
 
+import com.example.GymTracker.entity.Role;
 import com.example.GymTracker.entity.User;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,17 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserByEmail(String email) {
         return userRepository.findByEmail(email);
+    }
+
+    @Override
+    public void deleteUser(int id) {
+        User user = userRepository.findById(id).orElse(null);
+        if (user != null) {
+            for (Role role : user.getRoles()) {
+                role.getUsers().remove(user);
+            }
+            userRepository.delete(user);
+        }
     }
 
 }

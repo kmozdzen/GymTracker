@@ -8,9 +8,11 @@ import Login from './components/login/Login';
 import Profile from './components/profile/Profile';
 import Workout from './components/workout/Workout';
 import { ProtectedRoute } from './components/authentication/ProtectedRoute';
+import Admin from './components/admin/Admin';
+
+import axios from 'axios';
 
 const App = () => {
-
 
     return (
         <div>
@@ -53,10 +55,10 @@ const App = () => {
                         }>
                     </Route>
                     <Route 
-                        path='/logout'
+                        path='/admin'
                         element={
                             <ProtectedRoute>
-                                <Exercise />
+                                <Admin />
                             </ProtectedRoute>
                         }>
                     </Route>

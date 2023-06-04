@@ -16,7 +16,7 @@ const Profile = () => {
 
     return (
         <Container fluid="lg">
-        <Header />
+        <Header/>
         <div className="profile-container">
             <div className="profile-icon">
                 <FontAwesomeIcon icon={faUser}/>

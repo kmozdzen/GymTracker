@@ -13,4 +13,6 @@ public interface ExerciseService {
     List<Exercise> getExercisesByMuscle(String muscle);
 
     List<Exercise> getExercise(String muscle);
+
+    void deleteExercise(int id);
 }

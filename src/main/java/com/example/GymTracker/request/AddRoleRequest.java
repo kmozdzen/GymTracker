@@ -10,5 +10,6 @@ import lombok.*;
 public class AddRoleRequest {
     private int id;
     private String role;
+    private String message = "";
 }
 

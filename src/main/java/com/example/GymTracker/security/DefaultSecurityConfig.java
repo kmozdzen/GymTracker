@@ -50,7 +50,9 @@ public class DefaultSecurityConfig {
                         "/api/exercises",
                         "/api/exercises/**",
                         "/api/admin",
-                        "/api/admin/**"
+                        "/api/admin/**",
+                        "/api/kafka",
+                        "/api/kafka/**"
                 )
                 .permitAll()
                 .requestMatchers(

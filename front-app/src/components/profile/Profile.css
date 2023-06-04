@@ -72,3 +72,18 @@ hr
 {
     margin-top: 0px !important;
 }
+
+@media only screen and (max-device-width: 420px)
+{
+    .data-item
+    {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .data-item p
+    {
+        margin: auto;
+    }
+
+}
