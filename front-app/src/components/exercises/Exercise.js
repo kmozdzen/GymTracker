@@ -5,25 +5,19 @@ import Header from "../header/Header";
 import Row from "react-bootstrap/Row";
 import Col from "react-bootstrap/Col";
 import Container from 'react-bootstrap/Container';
-import { Link, useLoaderData, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { Card } from "react-bootstrap";
-import Button from "react-bootstrap/Button";
 import data from "./ExercisesContent";
-import axios from "axios";
 
 const Exercise = () => {
-
     const { name } = useParams();
-
     const [exercises, setExercises] = useState();
-    
 
     useEffect( () => {
          fetch('http://localhost:8080/api/exercises/' + name)
            .then((response) => response.json())
            .then((data) => {
-               console.log(data);
                setExercises(data);
            })
            .catch((err) => {
@@ -33,7 +27,7 @@ const Exercise = () => {
  
     return (
         <Container fluid="lg">
-        <Header />
+        <Header/>
         <div className="exercises-container">
                 <h2 className="exercsies-title">Exercises</h2>
                 <hr />

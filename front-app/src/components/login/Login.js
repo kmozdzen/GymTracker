@@ -49,7 +49,7 @@ const Login = () => {
             password: password,
             }).then((res) =>
             {
-             console.log(res.data);
+             console.log(res.data.token);
              if(res.data.message === "Login success")
              {
                 localStorage.setItem('token', res.data.token);

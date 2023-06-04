@@ -4,6 +4,7 @@ import com.example.GymTracker.entity.Exercise;
 import com.example.GymTracker.service.exerciseService.ExerciseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -32,5 +33,10 @@ public class ExerciseRestController {
     @PostMapping("/")
     public Exercise addExercise(@RequestBody Exercise exercise){
         return exerciseService.addExercise(exercise);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteExercise(@PathVariable("id") int id){
+        exerciseService.deleteExercise(id);
     }
 }

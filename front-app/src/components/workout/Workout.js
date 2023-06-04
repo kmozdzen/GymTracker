@@ -13,8 +13,7 @@ import { Button, ListGroup } from "react-bootstrap";
 import { DatePicker } from 'react-responsive-datepicker'
 import 'react-responsive-datepicker/dist/index.css'
 
-import { useParams } from "react-router-dom";
-import { useState, useEffect, onChange, value } from "react";
+import { useState } from "react";
 import AddWorkout from "../addWorkout/AddWorkout";
 import axios from "axios";
 import EditWorkout from "../editWorkout/EditWorkout";
@@ -29,11 +28,10 @@ const Workout = () => {
     const [pickedDate, setpickedDate] = useState(new Date());
     const [textDate, settextDate] = useState();
     
-    const [workouts, setWorkouts] = useState();
+    const [workouts, setWorkouts] = useState([]);
     const [myWorkouts, setMyWorkouts] = useState();
     
     const handleShowClick = () => {
-        console.log(localStorage.getItem("token"))
         try{
             let month = pickedDate.getMonth() + 1;
             let day = pickedDate.getDate();
@@ -63,7 +61,6 @@ const Workout = () => {
         if(!isAddOpen)
             axios.get("http://localhost:8080/api/exercises/").then((res) =>
         {
-         console.log(res.data);
          setExercises(res.data);
         }
        , fail => {
@@ -80,7 +77,6 @@ const Workout = () => {
         if(!isEditOpen)
             axios.get("http://localhost:8080/api/workouts/myWorkouts/" + date + "/" + localStorage.getItem("email"), {headers}).then((res) =>
         {
-         console.log(res.data);
          setMyWorkouts(res.data);
         }
        , fail => {
@@ -91,7 +87,7 @@ const Workout = () => {
 
     return (
         <Container fluid="lg">
-            <Header />
+            <Header/>
             <Container className="workout-container">
                 <h2 className="workout-title">Workout</h2>
                 <hr />
@@ -143,7 +139,7 @@ const Workout = () => {
                     </Col>
                 </Row>
             </Container>
-            {(workouts != null && workouts.length != 0)? 
+            {(workouts !== null && workouts.length !== 0)? 
                 <Container className="workout-container">
                     <h2 className="workout-title">
                         {

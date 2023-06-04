@@ -45,3 +45,8 @@ hr
     height: 5px;
     opacity: 100% !important;
 }
+
+div button svg path
+{
+    color: white;
+}

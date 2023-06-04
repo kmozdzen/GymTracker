@@ -9,7 +9,7 @@ import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@SecurityRequirement(name = "bearerAuth")
+@CrossOrigin(origins= "http://localhost:3000" )
 @RequestMapping(value = "api/admin", produces = MediaType.APPLICATION_JSON_VALUE)
 public class AdminRestController {
     private AdminService adminService;
@@ -20,8 +20,20 @@ public class AdminRestController {
     }
 
     @PutMapping("/add-role")
+    @SecurityRequirement(name = "bearerAuth")
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public AddRoleRequest addRole(@RequestBody AddRoleRequest addRoleRequest){
         return adminService.addRole(addRoleRequest);
+    }
+
+    @GetMapping("/{email}")
+    public String isAdmin(@PathVariable String email){
+        if(adminService.isAdmin(email)){
+            return "true";
+        }
+        else
+        {
+            return "false";
+        }
     }
 }

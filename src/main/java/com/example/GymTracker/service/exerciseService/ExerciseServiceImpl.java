@@ -41,5 +41,10 @@ public class ExerciseServiceImpl implements ExerciseService {
         return exerciseRepository.findExercisesByMuscle(muscle);
     }
 
+    @Override
+    public void deleteExercise(int id) {
+         exerciseRepository.deleteById(id);
+    }
+
 
 }

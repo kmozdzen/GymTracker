@@ -22,7 +22,7 @@ public class Role {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany
+    @ManyToMany()
     @JoinTable(
             name = "role_has_user",
             joinColumns = @JoinColumn(name = "role_id_role"),

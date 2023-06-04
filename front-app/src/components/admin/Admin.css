@@ -1,0 +1,18 @@
+.admin-container
+{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.sm-size
+{
+    width: 50% !important;
+    margin: 10px auto !important;
+    
+}
+
+button
+{
+    margin: 15px auto !important;
+}
